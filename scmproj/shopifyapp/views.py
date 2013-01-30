@@ -15,7 +15,7 @@ def login(request):
     # just skip to authenticate
     if request.REQUEST.get('shop'):
         return authenticate(request)
-    return render_to_response('shopify_app/login.html', {},
+    return render_to_response('shopifyapp/login.html', {},
                               context_instance=RequestContext(request))
 
 def authenticate(request):
@@ -33,7 +33,7 @@ def finalize(request):
         shopify_session = shopify.Session(shop_url, request.REQUEST)
     except shopify.ValidationException:
         messages.error(request, "Could not log in to Shopify store.")
-        return redirect(reverse('shopify_app.views.login'))
+        return redirect(reverse('shopifyapp.views.login'))
 
     request.session['shopify'] = {
                 "shop_url": shop_url,
@@ -49,4 +49,4 @@ def logout(request):
     request.session.pop('shopify', None)
     messages.info(request, "Successfully logged out.")
 
-    return redirect(reverse('shopify_app.views.login'))
+    return redirect(reverse('shopifyapp.views.login'))

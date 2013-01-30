@@ -30,13 +30,13 @@
   The callback URL of your app can be changed in the API screen of your Shopify admin interface.
 </p>
 
-<h3>3. <a href="{% url shopify_app.views.login %}">Login</a> to your shop</h3>
+<h3>3. <a href="{% url shopifyapp.views.login %}">Login</a> to your shop</h3>
 
 <p class="description">
   On login, the shop owner will be redirected to a Shopify URL containing the <strong>API-Key</strong> of the application.
   The shop will need to grant access to your application to give it access to its private admin data.
 
-  After authenticating, the browser will be redirected to the <code>shopify_app.views.finalize</code> view,
+  After authenticating, the browser will be redirected to the <code>shopifyapp.views.finalize</code> view,
   which creates a session using the <strong>API-Secret</strong>, and then redirects to the example dashboard.<br/>
   The example view at <code>home.views.index</code> will get the shop's recent <code>Orders</code> and <code>Articles</code> through the
   Shopify <a href="http://www.xfront.com/REST-Web-Services.html" title="Get more information about REST web services in general">REST</a> API and list them with all of your <code>Products</code>.

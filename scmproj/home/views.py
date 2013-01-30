@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 import shopify
-from shopify_app.decorators import shop_login_required
+from shopifyapp.decorators import shop_login_required
 
 def welcome(request):
     return render_to_response('home/welcome.html', {

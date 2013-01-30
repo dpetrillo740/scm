@@ -14,6 +14,6 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-    url(r'^login/', include('shopify_app.urls')),
+    url(r'^login/', include('shopifyapp.urls')),
     url(r'^', include('home.urls'), name='root_path'),
 )
