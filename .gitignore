@@ -1,3 +1,18 @@
+*.pyc
+*.sqlite3
+*.swp
+*.swo
+tags
+/MANIFEST
+/build
+/dist
+/dateutil
+/django
+/djangoappengine
+/djangotoolbox
+/pyactiveresource
+/shopify
+
 # Compiled source code
 *.pyc
 *.com
