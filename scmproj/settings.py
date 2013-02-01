@@ -2,6 +2,7 @@
 import os
 from shopify_settings import *
 import dj_database_url
+from postgresify import postgresify
 
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 ROOT_PATH = os.path.join(*os.path.split(os.path.abspath(os.path.dirname(__file__)))[:-1])
@@ -28,11 +29,13 @@ DATABASES = {
     }
 }
 
+
 try:
     if DATABASE_URL:
-        DATABASES['default'] =  dj_database_url.config(default='postgres://localhost')
+        DATABASES = postgresify()
 except:
     pass
+
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
