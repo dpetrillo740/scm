@@ -1,7 +1,6 @@
 # Django settings for scmproj project.
 import os
 from shopify_settings import *
-import dj_database_url
 
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 ROOT_PATH = os.path.join(*os.path.split(os.path.abspath(os.path.dirname(__file__)))[:-1])
@@ -21,19 +20,12 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', 
         #'NAME': os.path.join(SITE_ROOT, 'db-development.sqlite3'), # Or path to database file if using sqlite3.
         'NAME': 'dev_database_scm',
-        'USER': 'Dpetrillo ',                      # Not used with sqlite3.
-        'PASSWORD': 'postgres',                  # Not used with sqlite3.
+        'USER': 'Dpetrillo',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-
-
-try:
-    if DATABASE_URL:
-        DATABASES['default'] =  dj_database_url.config(default='postgres://localhost')
-except:
-    pass
 
 
 # Local time zone for this installation. Choices can be found here:
@@ -172,3 +164,7 @@ LOGGING = {
         },
     }
 }
+# Parse database configuration from $DATABASE_URL
+import dj_database_url
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
