@@ -70,3 +70,4 @@ nosetests.xml
 venv
 tinymce
 .DS_Store
+.env
