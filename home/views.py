@@ -10,10 +10,15 @@ def welcome(request):
 
 @shop_login_required
 def index(request):
-    products = shopify.Product.find(limit=3)
-    orders = shopify.Order.find(limit=3, order="created_at DESC")
+    products = shopify.Product.find(limit=50)
+    active_products = []
+    for product in products:
+        if product.attributes['published_at']:
+            active_products.append(product)
+            
+    orders = shopify.Order.find(limit=10, status='any', fulfillment_status='unshipped', order="created_at DESC")
     return render_to_response('home/index.html', {
-        'products': products,
+        'products': active_products,
         'orders': orders,
     }, context_instance=RequestContext(request))
 

@@ -51,7 +51,7 @@
 
 
 <div id="orders">
-  <h2>Your recent orders</h2>
+  <h2>Backorders</h2>
   {% if orders %}
     <ul>
     {% for order in orders %}
@@ -72,8 +72,7 @@
   {% endif %}
 </div>
 
-
-<h2>Some of your products</h2>
+<h2>Active Products:</h2>
 
 {% for product in products %}
   <div class="product box">
@@ -87,12 +86,13 @@
       <p class="price">{{ product.price_range }} {{ current_shop.currency }}</p>
       <p style="margin-bottom: 0">{{ product.product_type }} <span class="note">type</span></p>
       <p style="margin: 0">{{ product.vendor }} <span class="note">vendor</span></p>
+	  <p style="margin: 0">{{ product.published_status }} <span class="note">status</span></p>
 
       <div style="clear:left"></div>
     </div>
   </div>
 {% empty %}
   <em class="note">There are no products in your store.</em>
-{% endfor %}
+{% endfor %} 
 
 {% endblock %}

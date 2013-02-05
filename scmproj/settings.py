@@ -1,6 +1,7 @@
 # Django settings for scmproj project.
 import os
 from shopify_settings import *
+import django.conf.global_settings as DEFAULT_SETTINGS
 
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 ROOT_PATH = os.path.join(*os.path.split(os.path.abspath(os.path.dirname(__file__)))[:-1])
@@ -97,6 +98,11 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
+    'shopifyapp.context_processors.current_shop',
+)
+
+    
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
