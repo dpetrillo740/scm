@@ -54,18 +54,18 @@
   <h2>Backorders</h2>
   {% if orders %}
     <ul>
-    {% for order in orders %}
       <li>
         <div class="order box">
           <div class="wrapper">
+			  <!--
             <strong><a href="https://{{ current_shop.domain }}/admin/orders/{{ order.id }}">{{ order.name }}</a></strong>
             <span class="price">{{ order.total_price }} {{ order.currency }}</span>
             <span class="highlight">{{ order.financial_status }}</span>
-            by <span class="note">{{ order.billing_address.name }}</span>
+            by <span class="note">{{ order.billing_address.name }}</span>  -->
+			<span class="note">There are {{ orders|length }} orders on unshipped.</span>
           </div>
         </div>
       </li>
-    {% endfor %}
     </ul>
   {% else %}
     <em class="note">There are no orders in your store.</em>

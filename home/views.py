@@ -16,7 +16,10 @@ def index(request):
         if product.attributes['published_at']:
             active_products.append(product)
             
-    orders = shopify.Order.find(limit=10, status='any', fulfillment_status='unshipped', order="created_at DESC")
+    ordercount = shopify.Order.count(fulfillment_status='unshipped', status='any')        
+    orders = shopify.Order.find(limit=ordercount%250, status='any', fulfillment_status='unshipped', order="created_at DESC")
+    for n in range(1, ordercount/250+1): 
+        orders += shopify.Order.find(limit=250, status='any', fulfillment_status='unshipped', order="created_at DESC", created_at_max=orders[-1].created_at)
     return render_to_response('home/index.html', {
         'products': active_products,
         'orders': orders,
