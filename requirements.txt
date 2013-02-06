@@ -2,7 +2,7 @@ Django==1.4.3
 PyYAML==3.10
 ShopifyAPI==1.0.6
 distribute==0.6.31
-dj-database-url==0.1.2
+dj-database-url==0.2.1
 django-heroku-postgresify==0.3
 django-pylibmc-sasl==0.2.4
 psycopg2==2.4.6
