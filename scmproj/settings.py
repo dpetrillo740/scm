@@ -174,3 +174,25 @@ LOGGING = {
 import dj_database_url
 if 'DATABASE_URL' in os.environ:
     DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
+    
+def get_cache():
+  try:
+    os.environ['MEMCACHE_SERVERS'] = os.environ['MEMCACHIER_SERVERS']
+    os.environ['MEMCACHE_USERNAME'] = os.environ['MEMCACHIER_USERNAME']
+    os.environ['MEMCACHE_PASSWORD'] = os.environ['MEMCACHIER_PASSWORD']
+    return {
+      'default': {
+        'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
+        'LOCATION': os.environ['MEMCACHIER_SERVERS'],
+        'TIMEOUT': 500,
+        'BINARY': True,
+      }
+    }
+  except:
+    return {
+      'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+      }
+    }
+
+CACHES = get_cache()
