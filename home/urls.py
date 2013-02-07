@@ -4,4 +4,5 @@ urlpatterns = patterns('',
         url(r'^$', 'home.views.index', name='root_path'),
         url(r'^design/$', 'home.views.design'),
         url(r'^welcome/$', 'home.views.welcome'),
+        url(r'^update/$', 'home.views.update'),
 )
