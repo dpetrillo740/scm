@@ -28,6 +28,32 @@ DATABASES = {
     }
 }
 
+# Parse database configuration from $DATABASE_URL
+import dj_database_url
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
+    
+def get_cache():
+  try:
+    os.environ['MEMCACHE_SERVERS'] = os.environ['MEMCACHIER_SERVERS']
+    os.environ['MEMCACHE_USERNAME'] = os.environ['MEMCACHIER_USERNAME']
+    os.environ['MEMCACHE_PASSWORD'] = os.environ['MEMCACHIER_PASSWORD']
+    return {
+      'default': {
+        'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
+        'LOCATION': os.environ['MEMCACHIER_SERVERS'],
+        'TIMEOUT': 500,
+        'BINARY': True,
+      }
+    }
+  except:
+    return {
+      'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+      }
+    }
+
+CACHES = get_cache()
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -135,11 +161,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'home',
     'shopifyapp',
-    
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'django.contrib.admin',
+    'django.contrib.admindocs',
+    'south'
 )
 
 # A sample logging configuration. The only tangible logging
@@ -170,29 +194,3 @@ LOGGING = {
         },
     }
 }
-# Parse database configuration from $DATABASE_URL
-import dj_database_url
-if 'DATABASE_URL' in os.environ:
-    DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
-    
-def get_cache():
-  try:
-    os.environ['MEMCACHE_SERVERS'] = os.environ['MEMCACHIER_SERVERS']
-    os.environ['MEMCACHE_USERNAME'] = os.environ['MEMCACHIER_USERNAME']
-    os.environ['MEMCACHE_PASSWORD'] = os.environ['MEMCACHIER_PASSWORD']
-    return {
-      'default': {
-        'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
-        'LOCATION': os.environ['MEMCACHIER_SERVERS'],
-        'TIMEOUT': 500,
-        'BINARY': True,
-      }
-    }
-  except:
-    return {
-      'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
-      }
-    }
-
-CACHES = get_cache()
