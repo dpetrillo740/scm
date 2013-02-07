@@ -2,7 +2,6 @@ from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 import shopify
 from shopifyapp.decorators import shop_login_required
-from django.core.cache import cache
 from home.models import Sku
 from django.http import HttpResponseRedirect
 
@@ -10,8 +9,6 @@ def welcome(request):
     return render_to_response('home/welcome.html', {
         'callback_url': "http://%s/login/finalize" % (request.get_host()),
     }, context_instance=RequestContext(request))
-
-ORDER_KEY = "orders"
 
 @shop_login_required
 def index(request):
@@ -23,14 +20,12 @@ def index(request):
     
     return render_to_response('home/index.html', {
         'products': active_products,
-        'orders': fetch_cached_orders(),
+        'orders': fetch_orders(),
 #        'skus': skus,
     }, context_instance=RequestContext(request))
     
 @shop_login_required
 def update(request):
-    orders = fetch_orders()
-    cache.set(ORDER_KEY, orders, 300)
     products = shopify.Product.find(limit=50)
     for product in products:
         if product.attributes['published_at']:
@@ -38,10 +33,6 @@ def update(request):
                 sku = Sku(sku=variant.sku, title=product.attributes['title'], variant=variant.title)
                 sku.save()
     return HttpResponseRedirect("/")
-
-def fetch_cached_orders():
-  orders = cache.get(ORDER_KEY)
-  return orders
     
 def fetch_orders():
     ordercount = shopify.Order.count(fulfillment_status='unshipped', status='any')
